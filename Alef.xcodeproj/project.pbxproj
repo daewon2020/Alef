@@ -13,7 +13,6 @@
 		6AC749602908EB6F00339F1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7495E2908EB6F00339F1A /* LaunchScreen.storyboard */; };
 		6AC749682908EC6200339F1A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC749672908EC6100339F1A /* MainViewController.swift */; };
 		6AC7498A29090C3E00339F1A /* TextFieldWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7498929090C3E00339F1A /* TextFieldWithTitle.swift */; };
-		6AC7498C2909153200339F1A /* TopSectionStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7498B2909153200339F1A /* TopSectionStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		6AC749612908EB6F00339F1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6AC749672908EC6100339F1A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		6AC7498929090C3E00339F1A /* TextFieldWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithTitle.swift; sourceTree = "<group>"; };
-		6AC7498B2909153200339F1A /* TopSectionStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSectionStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +63,6 @@
 				6AC7495E2908EB6F00339F1A /* LaunchScreen.storyboard */,
 				6AC749612908EB6F00339F1A /* Info.plist */,
 				6AC7498929090C3E00339F1A /* TextFieldWithTitle.swift */,
-				6AC7498B2909153200339F1A /* TopSectionStackView.swift */,
 			);
 			path = Alef;
 			sourceTree = "<group>";
@@ -140,7 +137,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AC7498C2909153200339F1A /* TopSectionStackView.swift in Sources */,
 				6AC749542908EB6D00339F1A /* AppDelegate.swift in Sources */,
 				6AC749562908EB6D00339F1A /* SceneDelegate.swift in Sources */,
 				6AC7498A29090C3E00339F1A /* TextFieldWithTitle.swift in Sources */,
