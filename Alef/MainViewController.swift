@@ -7,19 +7,11 @@
 
 import UIKit
 
-final class MainViewController: UIViewController {
+protocol MainViewControllerProtocol: AnyObject {
     
-    lazy var personSectionStackView: UIStackView = {
-        let persanalDataStackView = UIStackView()
-        persanalDataStackView.translatesAutoresizingMaskIntoConstraints = false
-        persanalDataStackView.axis = .vertical
-        persanalDataStackView.alignment = .fill
-        persanalDataStackView.distribution = .fillEqually
-        persanalDataStackView.spacing = 6
-        persanalDataStackView.layer.borderColor = UIColor.lightGray.cgColor
-        persanalDataStackView.isLayoutMarginsRelativeArrangement = true
-        return persanalDataStackView
-    }()
+}
+
+final class MainViewController: UIViewController, UITableViewDelegate {
     
     lazy var sectionHeader: UILabel = {
         let headerLabel = UILabel()
@@ -31,18 +23,46 @@ final class MainViewController: UIViewController {
         return headerLabel
     }()
     
+    private var childsTableView: UITableView!
+    private var presenter: MainViewPresenterProtocol!
+    private var childsTableViewDataSource: ChildsTableViewDataSource!
+    
+    private var textFieldName: TextFieldWithTitle!
+    private var textFieldAge: TextFieldWithTitle!
+    private var childsHeaderView: ChildsHeaderView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let textFieldName = TextFieldWithTitle(with: "Name")
-        let textFieldAge = TextFieldWithTitle(with: "Age")
-        sectionHeader.text = "Персональные данные"
+        presenter = MainViewPresenter(view: self)
         
-        view.backgroundColor = .white
-        view.addSubview(personSectionStackView)
+        childsTableView = UITableView()
+        childsTableView.delegate = self
         
-        addSubviews(to: personSectionStackView, with: sectionHeader, textFieldName,textFieldAge)
+        childsTableView.register(
+            ChildesTableViewCell.self,
+            forCellReuseIdentifier: "childCell")
+        
+        childsTableViewDataSource = ChildsTableViewDataSource(
+            with: self,
+            and: presenter
+        )
+        
+        childsTableView.rowHeight = 150
+        
+        childsTableView.dataSource = childsTableViewDataSource
+        childsTableView.translatesAutoresizingMaskIntoConstraints = false
+        childsTableView.selectionFollowsFocus = true
+        childsTableView.allowsMultipleSelection = false
+        childsTableView.allowsFocus = true
+        childsTableView.allowsSelection = false
+        
+        setupSubViews()
         setupConstraints()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath)
     }
 }
 
@@ -56,12 +76,54 @@ extension MainViewController {
         }
     }
     
+    private func setupSubViews() {
+        view.backgroundColor = .white
+        textFieldName = TextFieldWithTitle(with: "Name")
+        textFieldAge = TextFieldWithTitle(with: "Age")
+        childsHeaderView = ChildsHeaderView()
+        sectionHeader.text = "Персональные данные"
+        
+        view.addSubview(sectionHeader)
+        view.addSubview(textFieldName)
+        view.addSubview(textFieldAge)
+        view.addSubview(childsHeaderView)
+        view.addSubview(childsTableView)
+    }
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            personSectionStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            personSectionStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            personSectionStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            personSectionStackView.heightAnchor.constraint(equalToConstant: 150)
+            sectionHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            sectionHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            sectionHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            sectionHeader.heightAnchor.constraint(equalToConstant: 60),
+            
+            textFieldName.topAnchor.constraint(equalTo: sectionHeader.bottomAnchor, constant: 10),
+            textFieldName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            textFieldName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            textFieldName.heightAnchor.constraint(equalToConstant: 60),
+            
+            textFieldAge.topAnchor.constraint(equalTo: textFieldName.bottomAnchor, constant: 10),
+            textFieldAge.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            textFieldAge.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            textFieldAge.heightAnchor.constraint(equalToConstant: 60),
+            
+            childsHeaderView.topAnchor.constraint(equalTo: textFieldAge.bottomAnchor, constant: 10),
+            childsHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            childsHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            childsHeaderView.heightAnchor.constraint(equalToConstant: 40),
+            
+            childsTableView.topAnchor.constraint(equalTo: childsHeaderView.bottomAnchor, constant: 10),
+            childsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            childsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            childsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16)
+            
         ])
     }
 }
+
+//MARK: - MainViewControllerProtocol
+
+extension MainViewController: MainViewControllerProtocol {
+    
+}
+
