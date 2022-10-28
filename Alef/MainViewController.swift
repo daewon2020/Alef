@@ -73,12 +73,14 @@ final class MainViewController: UIViewController {
 extension MainViewController {
     
     private func addSubviews(to view: UIView, with views: UIView...) {
+        
         views.forEach {
             view.addSubview($0)
         }
     }
     
     private func setupSubViews() {
+        
         view.backgroundColor = .white
         textFieldName = TextFieldWithTitle(with: "Name", for: .name)
         textFieldAge = TextFieldWithTitle(with: "Age", for: .age)
@@ -94,6 +96,7 @@ extension MainViewController {
     }
     
     private func setupConstraints() {
+        
         NSLayoutConstraint.activate([
             sectionHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             sectionHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -127,10 +130,12 @@ extension MainViewController {
     }
     
     @objc private func addButtonDidTaped() {
+        
         presenter.addButtonDidTaped()
     }
     
     @objc private func clearButtonDidTaped() {
+        
         showAlert(message: "ЭВМ хочет удалить список, согласен?")
     }
     
@@ -179,26 +184,32 @@ extension MainViewController {
 extension MainViewController: MainViewControllerProtocol {
     
     func childDidAdd() {
+        
         childsTableView.reloadData()
         clearButton.isHidden = false
     }
     
     func hideAddButton() {
+        
         childsHeaderView.addButton.isHidden = true
-        print(childsHeaderView.frame)
     }
     
     func childListDidClear() {
+        
         childsHeaderView.addButton.isHidden = false
         clearButton.isHidden = true
+        textFieldName.text = ""
+        textFieldAge.text = ""
         childsTableView.reloadData()
     }
     
     func reloadData() {
+        
         childsTableView.reloadData()
     }
     
     func showAddButton() {
+        
         childsHeaderView.addButton.isHidden = false
     }
 }
