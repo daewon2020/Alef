@@ -5,10 +5,9 @@
 //  Created by Константин Андреев on 26.10.2022.
 //
 
-import Foundation
 import UIKit
 
-class ChildsTableViewDataSource: NSObject, UITableViewDataSource, UITextFieldDelegate {
+final class ChildsTableViewDataSource: NSObject, UITableViewDataSource, UITextFieldDelegate {
     
     weak var presenter: MainViewPresenterProtocol!
     weak var parentView: MainViewControllerProtocol!
@@ -19,34 +18,17 @@ class ChildsTableViewDataSource: NSObject, UITableViewDataSource, UITextFieldDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        presenter.getChildsCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: "childCell",
-            for: indexPath) as? ChildesTableViewCell else { return UITableViewCell() }
-        cell.setupCell()
+            for: indexPath) as? ChildsTableViewCell else { return UITableViewCell() }
         
-            cell.textFieldName.tag = indexPath.row + 10
-            cell.textFieldName.delegate = self
-            cell.textFieldAge.tag = indexPath.row + 11
-            cell.textFieldAge.delegate = self
-        cell.textFieldAge.addTarget(self, action: #selector(nameTextFieldTapped), for: .touchUpInside)
+        cell.viewModel = presenter.getChild(for: indexPath)
+        cell.deleteButton.tag = indexPath.row
         
         return cell
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print(textField.tag)
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        
-        return true
-    }
-    
-    @objc func nameTextFieldTapped() {
-        print("nameTextFieldTapped")
     }
 }

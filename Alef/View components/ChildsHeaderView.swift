@@ -10,20 +10,28 @@ import UIKit
 final class ChildsHeaderView: UIStackView {
 
     private var countLabel: UILabel!
-    var addButton: UIButton!
+    
+    lazy var addButton: UIButton = {
+        
+        let addButton = UIButton(type: .contactAdd)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        addButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
+        addButton.setTitle("Добваить ребенка", for: .normal)
+        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        addButton.layer.borderColor = UIColor.systemBlue.cgColor
+        addButton.layer.borderWidth = 1
+        addButton.layer.cornerRadius = 15
+        
+        return addButton
+    }()
     
     init() {
         super.init(frame: .zero)
         setupStackView()
         countLabel = UILabel()
         countLabel.text = "Дети(макс. 5)"
-        
-        addButton = UIButton(type: .contactAdd)
-        addButton.setTitle("Добваить ребенка", for: .normal)
-        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        addButton.layer.borderColor = UIColor.systemBlue.cgColor
-        addButton.layer.borderWidth = 1
-        addButton.layer.cornerRadius = 15
         
         addArrangedSubview(countLabel)
         addArrangedSubview(addButton)
